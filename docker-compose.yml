@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  webboxoffice:
+    image: ${DOCKER_REGISTRY}webboxoffice
+    build:
+      context: .
+      dockerfile: WebBoxOffice\Dockerfile

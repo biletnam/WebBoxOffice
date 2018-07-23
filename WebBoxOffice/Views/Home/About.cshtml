@@ -1,0 +1,77 @@
+﻿@model WebBoxOffice.Models.Movies
+@{
+
+    var imgPath = "";
+
+    ViewData["Title"] = "About";
+}
+
+
+
+
+<h2 style="text-align:center; font-weight:bold;">Movie Details</h2>
+@{ List<Movies> mov = (List<Movies>)ViewData["Movies"];
+    if (mov.Count == 0)
+    {
+<center>
+    <img src="~/images/Sorry.jpg" />
+    <h2>Movie Name not found</h2>
+</center>
+        
+    }
+    else
+    {
+        <div>
+
+            <p>
+                @{
+                    foreach (Movies m1 in mov)
+                    {
+                        imgPath = "~/images/" + m1.Poster + ".jpg";
+                        <img src="@Url.Content(imgPath)" alt="@m1.MovieName" width="500px" height="250px" />
+                        <h4>Name: @m1.MovieName</h4>
+                        <h4>Year of Release: @m1.Year_Of_Release</h4>
+                        <h4>Plot:@m1.Plot</h4>
+                    }
+                }
+
+                <h4>
+                    Actors:
+                </h4>
+                @{List<MovieInfo> movInfolist = (List<MovieInfo>)ViewData["MovieInfo"];
+                    String[] actors = new String[movInfolist.Count];
+                    foreach (MovieInfo m1 in movInfolist)
+                    {
+                        for (int i = 0; i < movInfolist.Count; i++)
+                        {
+
+
+                            actors[i] = m1.ActorName;
+                            <h4>@actors[i]</h4>
+                            break;
+                        }
+
+                    }
+
+                }
+
+                @{List<MovieInfo> movInfo = (List<MovieInfo>)ViewData["MovieInfo"];
+                    String[] producers = new String[movInfolist.Count];
+                    for (int i = 0; i < movInfolist.Count; i++)
+                    {
+                        foreach (MovieInfo m1 in movInfolist)
+                        {
+
+                            <h4>
+                                Producer:@m1.ProducerName
+                            </h4>
+
+                            return;
+                        }
+                    }
+                }
+            </p>
+        </div>
+
+    }
+}

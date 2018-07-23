@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewData["Title"] = "AllMovies";
+}
+
+<h2>AllMovies</h2>
+<ul>
+    @{
+        List<String> movienamelist = (List<String>)ViewData["Message"];
+        foreach (string moviename in movienamelist)
+        {
+            <li><a href="@Url.Action("About", "Home",new {mname=moviename })">@moviename</a></li>
+        }
+    }
+</ul>

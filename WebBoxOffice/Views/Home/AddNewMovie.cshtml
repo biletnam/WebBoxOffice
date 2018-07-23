@@ -1,0 +1,143 @@
+﻿@model WebBoxOffice.Models.Movies
+
+
+@{
+    ViewData["Title"] = "AddNewMovie";
+    
+}
+
+@*<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $(#Add_Producer).hide();
+
+        })
+
+        function Change() {
+            $('#Add_Producer').show();
+        }
+
+    </script>*@
+
+<h2 style="text-align:center;">ADD NEW MOVIE</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset method="get">
+        <legend>Fill the details to add new movie</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.MovieName)    @Html.TextBoxFor(m => m.MovieName)
+                @Html.ValidationMessageFor(m => m.MovieName)
+
+
+            <li>
+                @Html.LabelFor(m => m.Year_Of_Release)    @Html.TextBoxFor(m => m.Year_Of_Release)
+                @Html.ValidationMessageFor(m => m.Year_Of_Release)
+
+            </li>
+
+            <li>
+                @Html.LabelFor(m => m.Plot)    @Html.TextBoxFor(m => m.Plot)
+                @Html.ValidationMessageFor(m => m.Plot)
+
+            </li>
+
+            <li>
+                @Html.LabelFor(m => m.Poster)   <input asp-for="Poster" type="file" class="form-control" />
+                @Html.ValidationMessageFor(m => m.Poster)
+            </li>
+
+            <li>
+                @Html.Label("Producer Name:")
+                @{List<Producers> ProducerList = (List<Producers>)ViewData["Producers"];
+                    @foreach (Producers Producer in ProducerList)
+                    {
+
+                        @Html.RadioButtonFor(m => Producer.ProducerName, Producer.ProducerName, true) @Producer.ProducerName
+                    }
+
+
+                }
+            </li>
+           @*<input type="submit" value="Click to add new producer" class="form-control" width="250px" height="50px" onclick="Change()"/>*@
+            <div id="Add_Producer" style="visibility:inherit;">
+                @{ Producers pro = new Producers();
+                    <fieldset id="add_producer">
+                        <h3>Fill the details to add new Producer</h3>
+                        <ol>
+                            <li>
+                                @Html.LabelFor(m => pro.ProducerName)    @Html.TextBoxFor(m => pro.ProducerName)
+                                @Html.ValidationMessageFor(m => pro.ProducerName)
+                            </li>
+
+                            <li>
+                                @Html.LabelFor(m => pro.P_Sex)      @Html.RadioButtonFor(m => pro.P_Sex, "M", true) Male             @Html.RadioButtonFor(m => pro.P_Sex, "F", false)Female
+                                @Html.ValidationMessageFor(m => pro.P_Sex)
+
+                            </li>
+
+                            <li>
+                                @Html.LabelFor(m => pro.P_DOB)    @Html.TextBoxFor(m => pro.P_DOB) <p>Please enter Date in dd/mm/yyyy format</p>
+                                @Html.ValidationMessageFor(m => pro.P_DOB)
+                            </li>
+
+                            <li>
+                                @Html.LabelFor(m => pro.P_Bio)   @Html.TextBoxFor(m => pro.P_Bio)
+                                @Html.ValidationMessageFor(m => pro.P_Bio)
+                            </li>
+                        </ol>
+                    </fieldset>
+                    
+                }
+            </div>
+            <li>
+                @Html.Label("Actor Name:")
+
+                @{List<Actors> Actorlist = (List<Actors>)ViewData["Actors"];
+                    foreach (Actors Actor in Actorlist)
+                    {
+                        <input asp-for="@Actor.checkboxAnswer" type="checkbox" />
+                        <label asp-for="@Actor.ActorName">@Actor.ActorName</label>
+                    }
+                }
+            </li>
+
+            <fieldset id="add_actor">
+                @{ Actors act = new Actors(); }
+                <h3>Fill the details to add new Actor</h3>
+                <ol>
+                    <li>
+
+                        @Html.LabelFor(m => act.ActorName)    @Html.TextBoxFor(m => act.ActorName)
+                        @Html.ValidationMessageFor(m => act.ActorName)
+
+
+                    <li>
+                        @Html.LabelFor(m => act.A_Sex)       @Html.RadioButtonFor(m => act.A_Sex, "M", true) Male       @Html.RadioButtonFor(m => act.A_Sex, "F", false) Female
+                        @Html.ValidationMessageFor(m => act.A_Sex)
+
+                    </li>
+
+                    <li>
+                        @Html.LabelFor(m => act.A_DOB)       @Html.TextBoxFor(m => act.A_DOB) <p>Please enter date in dd/mm/yyyy format</p>
+                        @Html.ValidationMessageFor(m => act.A_DOB)
+                    </li>
+
+                    <li>
+                        @Html.LabelFor(m => act.A_Bio)   @Html.TextBoxFor(m => act.A_Bio)
+                        @Html.ValidationMessageFor(m => act.A_Bio)
+                    </li>
+                </ol>
+                
+            </fieldset>
+            <br />
+            <br />
+
+            <input type="submit" value="ADD NEW MOVIE" style="text-align:center; width:250px; height:45px; margin-left:35%; font-weight:bold" onclick="@("window.location.href='" + @Url.Action("AddNewMovie", "Home",new { mname = Model.MovieName, myor = Model.Year_Of_Release, mplot = Model.Plot, mposter = Model.MovieName, aname= act.ActorName, asex = act.A_Sex, adob = act.A_DOB, abio = act.A_Bio,  pname = pro.ProducerName, psex = pro.P_Sex, pdob = pro.P_DOB, pbio = pro.P_Bio })+"'")  )  ;" />
+
+        </ol>
+    </fieldset>
+}

@@ -1,0 +1,26 @@
+﻿@model WebBoxOffice.Models.Movies
+@{
+    ViewData["Title"] = "Search";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <h2 style="text-align:center"><strong>SEARCH</strong></h2>
+    <div>
+        @{ Movies mov = new Movies();
+            <fieldset>
+                <h3>Fill the details to add new Producer</h3>
+                <ol>
+                    <li>
+                        @Html.LabelFor(m => mov.MovieName)    <input asp-for="MovieName" type="text" class="form-control" />
+                        @Html.ValidationMessageFor(m => mov.MovieName)
+                    </li>
+                </ol>
+            </fieldset>
+            <input type="submit" value="SEARCH" style="width:150px; height:40px; font-weight:bold" onclick="@("window.location.href='" + @Url.Action("About", "Home", new { mname = mov.MovieName }) + "'");" />
+        }
+    </div>
+}
+
+
